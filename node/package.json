@@ -1,0 +1,24 @@
+{
+  "name": "fxapis-examples-node",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MetaTrader 5 (MT5) REST API examples for Node.js and TypeScript: quickstart, click-to-trade signals, copy trader.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "quickstart": "node quickstart.ts",
+    "click-to-trade": "node click-to-trade.ts",
+    "copy-trader": "node copy-trader.ts",
+    "check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fxapis": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.8.0"
+  }
+}

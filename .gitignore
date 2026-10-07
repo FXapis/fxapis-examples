@@ -1,0 +1,7 @@
+*.pyc
+.env
+.venv/
+__pycache__/
+copy-trader-state.json
+copy_trader_state.json
+node_modules/
