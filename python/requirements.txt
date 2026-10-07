@@ -1,1 +1,1 @@
-fxapis>=0.1.0
+fxapis @ git+https://github.com/FXapis/fxapis-python.git@v0.1.0

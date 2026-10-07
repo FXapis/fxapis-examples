@@ -80,7 +80,7 @@ cd curl
 ```
 
 > [!NOTE]
-> The SDKs ([`fxapis-typescript`](https://github.com/FXapis/fxapis-typescript), [`fxapis-python`](https://github.com/FXapis/fxapis-python)) are not yet published to npm/PyPI. Until then, point `node/package.json`'s `fxapis` dependency and `python/requirements.txt` at the sibling repo (`npm install ../../fxapis-typescript`, `pip install -e ../../fxapis-python`) or vendor `src/` directly. The curl examples need nothing but `curl` and `jq` and work today.
+> The SDKs ([`fxapis-typescript`](https://github.com/FXapis/fxapis-typescript), [`fxapis-python`](https://github.com/FXapis/fxapis-python)) are not yet published to npm/PyPI, so `node/package.json` and `python/requirements.txt` here point at the SDKs' GitHub repos (a tagged release) instead — `npm install` and `pip install -r requirements.txt` above already do the right thing. Once the SDKs are on npm/PyPI, only those two lines change; nothing else about these examples does.
 
 ## Quickstart
 

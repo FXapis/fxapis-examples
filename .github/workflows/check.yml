@@ -1,12 +1,16 @@
-# Checks that every example still compiles against the published SDKs.
+# Checks that every example still compiles against the SDKs.
 # Nothing here calls the API: no key is needed, and no order is ever placed.
+#
+# The SDKs are installed from their GitHub repos (FXapis/fxapis-python,
+# FXapis/fxapis-typescript) rather than PyPI/npm until they are published
+# there — see python/requirements.txt and node/package.json.
 name: check
 
 on:
   push:
   pull_request:
   schedule:
-    - cron: "0 6 * * 1" # weekly, to catch a new SDK release that breaks an example
+    - cron: "0 6 * * 1" # weekly, to catch an SDK change that breaks an example
 
 jobs:
   python:
@@ -30,6 +34,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "24"
+      - run: npm install -g npm@latest
       - run: npm install
       - run: npm run check
 
