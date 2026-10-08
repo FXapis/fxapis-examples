@@ -1,9 +1,8 @@
 # Checks that every example still compiles against the SDKs.
 # Nothing here calls the API: no key is needed, and no order is ever placed.
 #
-# The SDKs are installed from their GitHub repos (FXapis/fxapis-python,
-# FXapis/fxapis-typescript) rather than PyPI/npm until they are published
-# there — see python/requirements.txt and node/package.json.
+# The Python SDK comes from PyPI (python/requirements.txt). The TypeScript SDK
+# comes from its GitHub repo (node/package.json) until it is published to npm.
 name: check
 
 on:

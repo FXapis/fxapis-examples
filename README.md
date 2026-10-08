@@ -80,7 +80,7 @@ cd curl
 ```
 
 > [!NOTE]
-> The SDKs ([`fxapis-typescript`](https://github.com/FXapis/fxapis-typescript), [`fxapis-python`](https://github.com/FXapis/fxapis-python)) are not yet published to npm/PyPI, so `node/package.json` and `python/requirements.txt` here point at the SDKs' GitHub repos (a tagged release) instead — `npm install` and `pip install -r requirements.txt` above already do the right thing. Once the SDKs are on npm/PyPI, only those two lines change; nothing else about these examples does.
+> The Python SDK is on [PyPI](https://pypi.org/project/fxapis/) (`pip install fxapis`). The TypeScript SDK ([`fxapis-typescript`](https://github.com/FXapis/fxapis-typescript)) is not on npm yet, so `node/package.json` points at its GitHub repo (a tagged release) instead — `npm install` above already does the right thing. Once it is on npm, only that one line changes.
 
 ## Quickstart
 
