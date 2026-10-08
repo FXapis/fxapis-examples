@@ -80,7 +80,7 @@ cd curl
 ```
 
 > [!NOTE]
-> The Python SDK is on [PyPI](https://pypi.org/project/fxapis/) (`pip install fxapis`). The TypeScript SDK ([`fxapis-typescript`](https://github.com/FXapis/fxapis-typescript)) is not on npm yet, so `node/package.json` points at its GitHub repo (a tagged release) instead — `npm install` above already does the right thing. Once it is on npm, only that one line changes.
+> The SDKs come from [npm](https://www.npmjs.com/package/fxapis) (`npm install fxapis`) and [PyPI](https://pypi.org/project/fxapis/) (`pip install fxapis`) — `npm install` and `pip install -r requirements.txt` above install them.
 
 ## Quickstart
 
