@@ -209,7 +209,13 @@ def main() -> None:
     print("member views their trades")
     on_trades_viewed(member)
 
-    ticket = order.get("brokerPositionId") if order else None
+    # The member's new position carries the order's own ticket (brokerOrderId).
+    client.accounts.reconcile(member.fxapis_account_id)  # refresh positions now, not in ~15 s
+    ticket = next(
+        (p["brokerPositionId"] for p in client.positions.list(member.fxapis_account_id)
+         if order and p["brokerPositionId"] == order.get("brokerOrderId")),
+        None,
+    )
     if ticket:
         print("member closes")
         print(f"  {on_member_closes(member, ticket)}")

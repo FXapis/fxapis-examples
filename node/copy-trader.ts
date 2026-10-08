@@ -120,7 +120,8 @@ async function copyOpen(deal: Deal, state: State): Promise<void> {
   for (const leg of wave.legs ?? []) {
     if (leg.orderId && (leg.state === "filled" || leg.state === "unresolved")) {
       const order = await waitUntilResolved(fx, leg.orderId); // returns at once when already settled
-      if (order.brokerPositionId) copies[leg.accountId] = order.brokerPositionId;
+      // The follower's new position carries the order's own ticket.
+      if (order.brokerOrderId) copies[leg.accountId] = order.brokerOrderId;
     }
   }
   state.copies[deal.brokerPositionId ?? deal.brokerDealId] = copies;

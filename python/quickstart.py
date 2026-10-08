@@ -97,7 +97,14 @@ def main() -> None:
         order = client.orders.wait_until_resolved(err.order_id or "")
     print(f"order {order['id']}: {order['state']} at {order['filledPrice']} (retcode {order['retcode']})")
 
-    ticket = order.get("brokerPositionId")
+    # The position the order opened carries the order's own ticket (brokerOrderId). Positions
+    # refresh by themselves about every 15 s; reconcile refreshes them now.
+    client.accounts.reconcile(account_id)
+    ticket = next(
+        (p["brokerPositionId"] for p in client.positions.list(account_id)
+         if p["brokerPositionId"] == order.get("brokerOrderId")),
+        None,
+    )
     if ticket:
         closed = client.positions.close(account_id, ticket)
         print(f"closed position {ticket}: {closed['state']} at {closed['filledPrice']}")

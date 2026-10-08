@@ -160,8 +160,12 @@ if (first.order && again.order && first.order.id !== again.order.id) throw new E
 console.log("member views their trades");
 await onTradesViewed(member);
 
-if (first.order?.brokerPositionId) {
+// The member's new position carries the order's own ticket (brokerOrderId).
+await fx.postAccountsByIdReconcile(member.fxapisAccountId); // refresh positions now, not in ~15 s
+const memberPositions: { brokerPositionId: string }[] = await fx.getAccountsByIdPositions(member.fxapisAccountId);
+const ticket = memberPositions.find((p) => p.brokerPositionId === first.order?.brokerOrderId)?.brokerPositionId;
+if (ticket) {
   console.log("member closes");
-  const closed = await onMemberCloses(member, first.order.brokerPositionId);
+  const closed = await onMemberCloses(member, ticket);
   console.log(`  closed at ${closed.filledPrice}`);
 }
