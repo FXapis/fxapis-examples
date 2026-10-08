@@ -1,0 +1,20 @@
+# A pull request when a new fxapis SDK is released, so the examples always
+# run against the current one. CI on that pull request is the check.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /node
+    schedule:
+      interval: daily
+    allow:
+      - dependency-name: fxapis
+    commit-message:
+      prefix: "deps"
+  - package-ecosystem: pip
+    directory: /python
+    schedule:
+      interval: daily
+    allow:
+      - dependency-name: fxapis
+    commit-message:
+      prefix: "deps"
