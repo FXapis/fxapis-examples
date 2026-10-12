@@ -100,7 +100,7 @@ The full walkthrough is in the [signals guide](https://docs.fxapis.com/signals).
 
 ## Copy trader
 
-Watches a master MT5 account and mirrors its trades onto follower accounts. There are no event webhooks yet, so it polls: `reconcile` the master, read new deals, and for each opening deal send **one multi-account order** (`POST /v1/execution-waves`) to every follower, with the master deal id as the idempotency key so a restart never copies a deal twice. When the master closes, the followers' copies are closed. Per-account volumes (`weights`), a release time (`executeAt`) and barrier policies (`release-ready`, `all-or-nothing`, `wait`) are available on the same endpoint.
+Watches a master MT5 account and mirrors its trades onto follower accounts. It polls, so it runs anywhere with no public server: `reconcile` the master, read new deals, and for each opening deal send **one multi-account order** (`POST /v1/execution-waves`) to every follower, with the master deal id as the idempotency key so a restart never copies a deal twice. When the master closes, the followers' copies are closed. Per-account volumes (`weights`), a release time (`executeAt`) and barrier policies (`release-ready`, `all-or-nothing`, `wait`) are available on the same endpoint.
 
 Kept deliberately small: buys and sells only, full closes only, no stop copying. A starting point, not a product.
 
@@ -116,7 +116,7 @@ Kept deliberately small: buys and sells only, full closes only, no stop copying.
 
 **Can I run this against a live account?** Yes, but don't start there. Every fxapis key, test keys included, reaches a real broker — there is no simulated market. Validate behaviour on a demo account first.
 
-**Why poll instead of a webhook?** fxapis has no event webhooks yet. The copy trader example shows the poll-and-reconcile pattern that works today; it is replaced by a webhook subscription without changing anything else once that ships.
+**Why poll instead of a webhook?** Polling needs no public server, so the example runs on a laptop. With a server, subscribe a [webhook](https://docs.fxapis.com/guides/webhooks) to `position.opened` and `position.closed` and run the same copy logic per event. Position events come from fxapis's position sync, about every 15 seconds, so a copier that reconciles every few seconds, as this one does, sees a master trade sooner — webhooks save the loop, not the latency.
 
 **MT4?** Not supported. MT5 only.
 

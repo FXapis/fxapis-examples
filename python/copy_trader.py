@@ -7,9 +7,10 @@ Watches a master account's deals and mirrors them onto follower accounts:
 * a deal that **closes** a master position (``entry == "out"``) closes the
   followers' copies of it.
 
-There are no event webhooks yet, so this polls: every few seconds it asks
-fxapis to refresh the master from the broker (``reconcile``) and reads the new
-deals. Every copy carries an idempotency key made from the master deal, so a
+It polls, so it needs no public server: every few seconds it asks fxapis to
+refresh the master from the broker (``reconcile``) and reads the new deals.
+(With a server, ``position.opened`` / ``position.closed`` webhooks can replace
+the loop: https://docs.fxapis.com/guides/webhooks) Every copy carries an idempotency key made from the master deal, so a
 restart or a retry never copies the same deal twice (keys are honoured for 24 hours;
 the state file below covers longer gaps).
 

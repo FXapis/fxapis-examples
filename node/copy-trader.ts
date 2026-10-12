@@ -5,8 +5,10 @@
 //    order on every follower (POST /v1/execution-waves);
 //  - a deal that CLOSES a master position (entry "out") closes the followers' copies.
 //
-// There are no event webhooks yet, so this polls: every few seconds it asks
-// fxapis to refresh the master from the broker (reconcile) and reads new deals.
+// It polls, so it needs no public server: every few seconds it asks fxapis to
+// refresh the master from the broker (reconcile) and reads new deals. (With a
+// server, position.opened / position.closed webhooks can replace the loop:
+// https://docs.fxapis.com/guides/webhooks)
 // Every copy carries an idempotency key made from the master deal, so a restart
 // or retry never copies the same deal twice (keys are honoured for 24 hours;
 // the state file covers longer gaps).
