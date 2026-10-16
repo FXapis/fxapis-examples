@@ -94,11 +94,13 @@ try {
 }
 console.log(`order ${order.id}: ${order.state} at ${order.filledPrice} (retcode ${order.retcode})`);
 
-// The position the order opened carries the order's own ticket (brokerOrderId). Positions
-// refresh by themselves about every 15 s; reconcile refreshes them now.
+// The order names the position it opened (brokerPositionId); until it does, the position carries
+// the order's own ticket (brokerOrderId). Positions refresh by themselves about every 15 s;
+// reconcile refreshes them now.
 await fx.postAccountsByIdReconcile(accountId);
+const opened = order.brokerPositionId ?? order.brokerOrderId;
 const positions: { brokerPositionId: string }[] = await fx.getAccountsByIdPositions(accountId);
-const ticket = positions.find((p) => p.brokerPositionId === order.brokerOrderId)?.brokerPositionId;
+const ticket = positions.find((p) => p.brokerPositionId === opened)?.brokerPositionId;
 if (ticket) {
   const closed = await fx.postAccountsByIdPositionsByPositionIdClose(accountId, ticket, {}, {
     idempotencyKey: `close_${ticket}`,

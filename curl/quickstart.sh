@@ -64,10 +64,11 @@ echo "$ORDER" | jq '.data // .error'
 # On .error.code == "ORDER_UNRESOLVED": do NOT resend. Poll GET /v1/orders/{id} until it leaves "unknown".
 # On "SEND_FAILED" / "ACCOUNT_NOT_READY": resend with the SAME Idempotency-Key.
 
-# 4. Close the position it opened — with its own key. That position carries the order's own
-#    ticket (brokerOrderId). Positions refresh by themselves about every 15 s; reconcile does it now.
+# 4. Close the position it opened — with its own key. The order names it (brokerPositionId);
+#    until it does, that position carries the order's own ticket (brokerOrderId).
+#    Positions refresh by themselves about every 15 s; reconcile does it now.
 curl -sS -X POST "$API/v1/accounts/$ACCOUNT_ID/reconcile" "${AUTH[@]}" > /dev/null
-OPENED=$(echo "$ORDER" | jq -r '.data.brokerOrderId // empty')
+OPENED=$(echo "$ORDER" | jq -r '.data.brokerPositionId // .data.brokerOrderId // empty')
 TICKET=$(curl -sS "$API/v1/accounts/$ACCOUNT_ID/positions" "${AUTH[@]}" \
   | jq -r --arg t "$OPENED" '.data[] | select(.brokerPositionId == $t) | .brokerPositionId')
 if [ -n "$TICKET" ]; then

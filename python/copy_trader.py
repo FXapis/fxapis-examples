@@ -112,8 +112,9 @@ def copy_open(deal: Deal, followers: list[str], multiplier: Decimal, state: dict
         order_id = leg.get("orderId")
         if order_id and leg.get("state") in ("filled", "unresolved"):
             order = client.orders.wait_until_resolved(order_id)  # returns at once when already settled
-            # The follower's new position carries the order's own ticket.
-            ticket = order.get("brokerOrderId")
+            # The order names the follower's new position (brokerPositionId); until it does, that
+            # position carries the order's own ticket (brokerOrderId).
+            ticket = order.get("brokerPositionId") or order.get("brokerOrderId")
             if ticket:
                 copies[leg["accountId"]] = ticket
     state["copies"][master_position] = copies
