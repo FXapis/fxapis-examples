@@ -93,7 +93,7 @@ For apps where each member approves a signal with a click, on their own MT5 acco
 1. **Connect** the member's account once, and check the credentials straight away with `warm` + `status` so a wrong password is caught on the connect screen, not on the first trade.
 2. **Prepare on view** — when the member *opens* the signal, `POST /v1/accounts/prepare` brings their account online (up to 200 accounts per call). By the time they tap approve, the order goes straight through.
 3. **Order with a signal + member key** — `Idempotency-Key: signal_<id>:member_<id>` means a double tap, a flaky connection or a retry returns the first answer and never opens a second position.
-4. **Handle every outcome** — filled; `ORDER_REJECTED` (show the reason); `ORDER_UNRESOLVED` (**never resend** — poll the order); `ACCOUNT_NOT_READY` / `SEND_FAILED` (nothing was sent — retry with the same key).
+4. **Handle every outcome** — filled; `ORDER_REJECTED` (show the reason); `NO_PRICE` (no price for the symbol — market closed or not offered; nothing was sent, retry once it quotes); `ORDER_UNRESOLVED` (**never resend** — poll the order); `ACCOUNT_NOT_READY` / `SEND_FAILED` (nothing was sent — retry with the same key).
 5. Show positions with their `observedAt`, close with a key, and `disconnect` when a member leaves (the stored password is erased at once).
 
 The full walkthrough is in the [signals guide](https://docs.fxapis.com/signals).
