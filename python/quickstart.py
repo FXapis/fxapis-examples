@@ -39,7 +39,7 @@ def connect_or_reuse(client: Fxapis) -> str:
     try:
         account = client.accounts.connect(
             login=login,
-            server=server,  # exactly as MetaTrader shows it, e.g. "VantageMarkets-Demo"
+            server=server,  # exactly as MetaTrader shows it, e.g. "ICMarketsSC-Demo" or "FTMO-Demo"
             password=password,  # the TRADING password, not the investor password
             mode="warm_on_demand",  # online when needed; offline after 15 idle minutes
             label="fxapis quickstart",

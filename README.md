@@ -52,7 +52,7 @@ Looking for the **Postman collection**, **TradingView alert payloads** or **n8n 
 ## Setup
 
 1. Create an API key in the console at [fxapis.com](https://fxapis.com).
-2. Open a demo MT5 account with any broker and note its **login**, **trading password** and **server name** (exactly as MetaTrader shows it, e.g. `VantageMarkets-Demo`).
+2. Open a demo MT5 account with any broker and note its **login**, **trading password** and **server name** (exactly as MetaTrader shows it, e.g. `ICMarketsSC-Demo`, `Pepperstone-Demo` or `Exness-MT5Trial7`).
 3. Copy [`.env.example`](.env.example) to `.env`, fill it in, and export it (`set -a; . ./.env; set +a`).
 
 ### Python

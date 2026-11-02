@@ -23,7 +23,7 @@ async function connectOrReuse(): Promise<string> {
   try {
     const account = await fx.postAccounts({
       login,
-      server, // exactly as MetaTrader shows it, e.g. "VantageMarkets-Demo"
+      server, // exactly as MetaTrader shows it, e.g. "Pepperstone-Demo" or "Exness-MT5Trial7"
       password: env("MT5_PASSWORD"), // the TRADING password, not the investor password
       mode: "warm_on_demand", // online when needed; offline after 15 idle minutes
       label: "fxapis quickstart",
